@@ -308,17 +308,17 @@ function getDetailIcon(type) {
 }
 
 export async function getServerSideProps(context) {
-  const db = getDb();
-  const row = db.prepare('SELECT * FROM events WHERE slug = ?').get(context.params.slug);
+  const db = await getDb();
+  const res = await db.query('SELECT * FROM events WHERE slug = $1', [context.params.slug]);
   
-  if (!row) {
+  if (res.rows.length === 0) {
     return { notFound: true };
   }
   
-  const event = rowToEvent(row);
+  const event = rowToEvent(res.rows[0]);
   
-  const user = getSessionUser(context.req);
-  const initialIsSaved = user ? isEventSaved(user.id, event.id) : false;
+  const user = await getSessionUser(context.req);
+  const initialIsSaved = user ? await isEventSaved(user.id, event.id) : false;
   
   return { props: { event, initialIsSaved } };
 }

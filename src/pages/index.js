@@ -60,8 +60,8 @@ export default function Home({ events }) {
 }
 
 export async function getServerSideProps() {
-  const db = getDb();
-  const rows = db.prepare('SELECT * FROM events ORDER BY created_at DESC').all();
-  const events = rows.map(rowToEvent);
+  const db = await getDb();
+  const res = await db.query('SELECT * FROM events ORDER BY created_at DESC');
+  const events = res.rows.map(rowToEvent);
   return { props: { events } };
 }

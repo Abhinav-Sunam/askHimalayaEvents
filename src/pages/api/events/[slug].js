@@ -57,14 +57,14 @@ function jsonParser(req, res) {
 
 export default async function handler(req, res) {
   const { slug } = req.query;
-  const db = getDb();
+  const db = await getDb();
 
   if (req.method === 'GET') {
-    const row = db.prepare('SELECT * FROM events WHERE slug = ?').get(slug);
-    if (!row) {
+    const result = await db.query('SELECT * FROM events WHERE slug = $1', [slug]);
+    if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Event not found' });
     }
-    return res.status(200).json({ event: rowToEvent(row) });
+    return res.status(200).json({ event: rowToEvent(result.rows[0]) });
   }
 
   // Parse body for PUT and DELETE
@@ -77,35 +77,37 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'DELETE') {
-    const user = getSessionUser(req);
+    const user = await getSessionUser(req);
     if (!user) {
       return res.status(401).json({ error: 'Must be logged in' });
     }
 
-    const row = db.prepare('SELECT id, created_by FROM events WHERE slug = ?').get(slug);
-    if (!row) {
+    const result = await db.query('SELECT id, created_by FROM events WHERE slug = $1', [slug]);
+    if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Event not found' });
     }
+    const row = result.rows[0];
 
     if (user.role !== 'admin' && row.created_by !== user.id) {
       return res.status(403).json({ error: 'Forbidden' });
     }
 
-    db.prepare('DELETE FROM saved_events WHERE event_id = ?').run(row.id);
-    db.prepare('DELETE FROM events WHERE slug = ?').run(slug);
+    await db.query('DELETE FROM saved_events WHERE event_id = $1', [row.id]);
+    await db.query('DELETE FROM events WHERE slug = $1', [slug]);
     return res.status(200).json({ message: 'Event deleted successfully' });
   }
 
   if (req.method === 'PUT') {
-    const user = getSessionUser(req);
+    const user = await getSessionUser(req);
     if (!user) {
       return res.status(401).json({ error: 'Must be logged in to edit events' });
     }
 
-    const row = db.prepare('SELECT id, created_by, image FROM events WHERE slug = ?').get(slug);
-    if (!row) {
+    const result = await db.query('SELECT id, created_by, image FROM events WHERE slug = $1', [slug]);
+    if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Event not found' });
     }
+    const row = result.rows[0];
 
     if (user.role !== 'admin' && row.created_by !== user.id) {
       return res.status(403).json({ error: 'You can only edit your own events' });
@@ -117,19 +119,19 @@ export default async function handler(req, res) {
       newImage = `/uploads/${req.file.filename}`;
     }
 
-    db.prepare(`
+    await db.query(`
       UPDATE events 
-      SET title = COALESCE(?, title),
-          description = COALESCE(?, description),
-          about = COALESCE(?, about),
-          date = COALESCE(?, date),
-          time = COALESCE(?, time),
-          location = COALESCE(?, location),
-          venue = COALESCE(?, venue),
-          entry_fee = COALESCE(?, entry_fee),
-          image = ?
-      WHERE slug = ?
-    `).run(title, description, about, date, time, location, venue, entryFee, newImage, slug);
+      SET title = COALESCE($1, title),
+          description = COALESCE($2, description),
+          about = COALESCE($3, about),
+          date = COALESCE($4, date),
+          time = COALESCE($5, time),
+          location = COALESCE($6, location),
+          venue = COALESCE($7, venue),
+          entry_fee = COALESCE($8, entry_fee),
+          image = $9
+      WHERE slug = $10
+    `, [title, description, about, date, time, location, venue, entryFee, newImage, slug]);
 
     return res.status(200).json({ message: 'Event updated successfully' });
   }

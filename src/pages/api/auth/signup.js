@@ -2,7 +2,7 @@ import getDb from '../../../lib/db';
 import { hashPassword, createSession, setSessionCookie } from '../../../lib/auth';
 import { v4 as uuidv4 } from 'uuid';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -13,17 +13,17 @@ export default function handler(req, res) {
     return res.status(400).json({ error: 'Name, phone, and password are required' });
   }
 
-  const db = getDb();
+  const db = await getDb();
 
   // Check if user exists
-  const existing = db.prepare('SELECT id FROM users WHERE phone = ?').get(phone);
-  if (existing) {
+  const existingRes = await db.query('SELECT id FROM users WHERE phone = $1', [phone]);
+  if (existingRes.rows.length > 0) {
     return res.status(409).json({ error: 'Phone number already registered' });
   }
 
   if (email) {
-    const existingEmail = db.prepare('SELECT id FROM users WHERE email = ?').get(email);
-    if (existingEmail) {
+    const existingEmailRes = await db.query('SELECT id FROM users WHERE email = $1', [email]);
+    if (existingEmailRes.rows.length > 0) {
       return res.status(409).json({ error: 'Email already registered' });
     }
   }
@@ -31,11 +31,12 @@ export default function handler(req, res) {
   const userId = uuidv4();
   const passwordHash = hashPassword(password);
 
-  db.prepare(
-    'INSERT INTO users (id, name, phone, email, password_hash) VALUES (?, ?, ?, ?, ?)'
-  ).run(userId, name, phone, email || null, passwordHash);
+  await db.query(
+    'INSERT INTO users (id, name, phone, email, password_hash) VALUES ($1, $2, $3, $4, $5)',
+    [userId, name, phone, email || null, passwordHash]
+  );
 
-  const sessionId = createSession(userId);
+  const sessionId = await createSession(userId);
   setSessionCookie(res, sessionId);
 
   return res.status(201).json({

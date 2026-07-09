@@ -333,11 +333,11 @@ export async function getServerSideProps(context) {
   const getDb = dbModule.default;
   const rowToEvent = dbModule.rowToEvent;
 
-  const db = getDb();
-  const row = db.prepare('SELECT * FROM events WHERE slug = ?').get(context.params.slug);
-  if (!row) {
+  const db = await getDb();
+  const res = await db.query('SELECT * FROM events WHERE slug = $1', [context.params.slug]);
+  if (res.rows.length === 0) {
     return { notFound: true };
   }
-  const event = rowToEvent(row);
+  const event = rowToEvent(res.rows[0]);
   return { props: { event } };
 }

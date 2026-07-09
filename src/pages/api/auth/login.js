@@ -1,7 +1,7 @@
 import getDb from '../../../lib/db';
 import { verifyPassword, createSession, setSessionCookie } from '../../../lib/auth';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -12,12 +12,14 @@ export default function handler(req, res) {
     return res.status(400).json({ error: 'Phone/email and password are required' });
   }
 
-  const db = getDb();
+  const db = await getDb();
 
   // Find user by phone or email
-  const user = db.prepare(
-    'SELECT * FROM users WHERE phone = ? OR email = ?'
-  ).get(identifier, identifier);
+  const userRes = await db.query(
+    'SELECT * FROM users WHERE phone = $1 OR email = $2',
+    [identifier, identifier]
+  );
+  const user = userRes.rows.length > 0 ? userRes.rows[0] : null;
 
   if (!user) {
     return res.status(401).json({ error: 'Invalid credentials' });
@@ -27,7 +29,7 @@ export default function handler(req, res) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
 
-  const sessionId = createSession(user.id);
+  const sessionId = await createSession(user.id);
   setSessionCookie(res, sessionId);
 
   return res.status(200).json({

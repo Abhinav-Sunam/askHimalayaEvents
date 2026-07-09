@@ -62,16 +62,16 @@ const BADGE_COLORS = {
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    const db = getDb();
-    const rows = db.prepare('SELECT * FROM events ORDER BY created_at DESC').all();
-    const events = rows.map(rowToEvent);
+    const db = await getDb();
+    const rowsRes = await db.query('SELECT * FROM events ORDER BY created_at DESC');
+    const events = rowsRes.rows.map(rowToEvent);
     return res.status(200).json({ events });
   }
 
   if (req.method === 'POST') {
     await runMulter(req, res);
 
-    const user = getSessionUser(req);
+    const user = await getSessionUser(req);
     if (!user) {
       return res.status(401).json({ error: 'Must be logged in to create events' });
     }
@@ -100,13 +100,13 @@ export default async function handler(req, res) {
     const dateFull = `${days[dateObj.getDay()]}, ${dayNum} ${fullMonthNames[dateObj.getMonth()]}, ${dateObj.getFullYear()}`;
     const dateShort = `${dayNum} ${monthName} ${dateObj.getFullYear()}`;
 
-    const db = getDb();
+    const db = await getDb();
     const id = uuidv4();
 
-    db.prepare(`
+    await db.query(`
       INSERT INTO events (id, slug, category, title, description, about, image, date, date_full, time, location, venue, entry_fee, cta, badge_color, badge_text_color, age_limit, event_type, organized_by, duration, things_to_know, carousel_bg, carousel_date, carousel_venue, created_by)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)
+    `, [
       id, slug, category, title, description, about || '', imagePath,
       dateShort, dateFull, time, location, venue || location,
       entryFee || 'Free', 'Register',
@@ -114,10 +114,10 @@ export default async function handler(req, res) {
       ageLimit || 'All ages allowed', category, user.name,
       duration || '', thingsToKnow || JSON.stringify([]),
       carouselBg, carouselDate, venue || location, user.id
-    );
+    ]);
 
-    const newEvent = db.prepare('SELECT * FROM events WHERE id = ?').get(id);
-    return res.status(201).json({ event: rowToEvent(newEvent) });
+    const newEventRes = await db.query('SELECT * FROM events WHERE id = $1', [id]);
+    return res.status(201).json({ event: rowToEvent(newEventRes.rows[0]) });
   }
 
   return res.status(405).json({ error: 'Method not allowed' });

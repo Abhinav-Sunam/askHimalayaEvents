@@ -13,35 +13,37 @@ export function verifyPassword(password, hash) {
   return bcrypt.compareSync(password, hash);
 }
 
-export function createSession(userId) {
-  const db = getDb();
+export async function createSession(userId) {
+  const db = await getDb();
   const sessionId = uuidv4();
   const expiresAt = new Date(Date.now() + SESSION_MAX_AGE * 1000).toISOString();
 
-  db.prepare('INSERT INTO sessions (id, user_id, expires_at) VALUES (?, ?, ?)').run(sessionId, userId, expiresAt);
+  await db.query('INSERT INTO sessions (id, user_id, expires_at) VALUES ($1, $2, $3)', [sessionId, userId, expiresAt]);
 
   return sessionId;
 }
 
-export function getSessionUser(req) {
+export async function getSessionUser(req) {
   const cookies = cookie.parse(req.headers.cookie || '');
   const sessionId = cookies.session_id;
   if (!sessionId) return null;
 
-  const db = getDb();
-  const session = db.prepare('SELECT * FROM sessions WHERE id = ? AND expires_at > datetime(\'now\')').get(sessionId);
-  if (!session) return null;
+  const db = await getDb();
+  const sessionRes = await db.query('SELECT * FROM sessions WHERE id = $1 AND expires_at > CURRENT_TIMESTAMP', [sessionId]);
+  if (sessionRes.rows.length === 0) return null;
 
-  const user = db.prepare('SELECT id, name, phone, email, role FROM users WHERE id = ?').get(session.user_id);
-  return user || null;
+  const session = sessionRes.rows[0];
+
+  const userRes = await db.query('SELECT id, name, phone, email, role FROM users WHERE id = $1', [session.user_id]);
+  return userRes.rows.length > 0 ? userRes.rows[0] : null;
 }
 
-export function destroySession(req, res) {
+export async function destroySession(req, res) {
   const cookies = cookie.parse(req.headers.cookie || '');
   const sessionId = cookies.session_id;
   if (sessionId) {
-    const db = getDb();
-    db.prepare('DELETE FROM sessions WHERE id = ?').run(sessionId);
+    const db = await getDb();
+    await db.query('DELETE FROM sessions WHERE id = $1', [sessionId]);
   }
 
   res.setHeader('Set-Cookie', cookie.serialize('session_id', '', {

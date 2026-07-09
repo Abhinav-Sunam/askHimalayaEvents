@@ -1,24 +1,24 @@
-import Database from 'better-sqlite3';
-import path from 'path';
+import { Pool } from 'pg';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcryptjs';
 
-const DB_PATH = path.join(process.cwd(), 'askhimalaya.db');
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
-let db;
+let initialized = false;
 
-function getDb() {
-  if (!db) {
-    db = new Database(DB_PATH);
-    db.pragma('journal_mode = WAL');
-    initializeTables();
-    seedData();
+async function getDb() {
+  if (!initialized) {
+    await initializeTables();
+    await seedData();
+    initialized = true;
   }
-  return db;
+  return pool;
 }
 
-function initializeTables() {
-  db.exec(`
+async function initializeTables() {
+  await pool.query(`
     CREATE TABLE IF NOT EXISTS users (
       id TEXT PRIMARY KEY,
       name TEXT NOT NULL,
@@ -26,7 +26,7 @@ function initializeTables() {
       email TEXT UNIQUE,
       password_hash TEXT NOT NULL,
       role TEXT DEFAULT 'user',
-      created_at TEXT DEFAULT (datetime('now'))
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
     CREATE TABLE IF NOT EXISTS events (
@@ -55,21 +55,21 @@ function initializeTables() {
       carousel_date TEXT,
       carousel_venue TEXT,
       created_by TEXT,
-      created_at TEXT DEFAULT (datetime('now')),
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (created_by) REFERENCES users(id)
     );
 
     CREATE TABLE IF NOT EXISTS sessions (
       id TEXT PRIMARY KEY,
       user_id TEXT NOT NULL,
-      expires_at TEXT NOT NULL,
+      expires_at TIMESTAMP NOT NULL,
       FOREIGN KEY (user_id) REFERENCES users(id)
     );
 
     CREATE TABLE IF NOT EXISTS saved_events (
       user_id TEXT NOT NULL,
       event_id TEXT NOT NULL,
-      created_at TEXT DEFAULT (datetime('now')),
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY (user_id, event_id),
       FOREIGN KEY (user_id) REFERENCES users(id),
       FOREIGN KEY (event_id) REFERENCES events(id)
@@ -77,17 +77,20 @@ function initializeTables() {
   `);
 }
 
-function seedData() {
-  const count = db.prepare('SELECT COUNT(*) as c FROM events').get();
-  if (count.c > 0) return;
+async function seedData() {
+  const countRes = await pool.query('SELECT COUNT(*) as c FROM events');
+  const count = parseInt(countRes.rows[0].c, 10);
+  if (count > 0) return;
 
   // Seed admin user
   const adminId = uuidv4();
   const adminHash = bcrypt.hashSync('admin123', 10);
-  db.prepare(`
-    INSERT OR IGNORE INTO users (id, name, phone, email, password_hash, role)
-    VALUES (?, ?, ?, ?, ?, ?)
-  `).run(adminId, 'Admin', '+910000000000', 'admin@askhimalaya.com', adminHash, 'admin');
+  
+  await pool.query(`
+    INSERT INTO users (id, name, phone, email, password_hash, role)
+    VALUES ($1, $2, $3, $4, $5, $6)
+    ON CONFLICT (phone) DO NOTHING
+  `, [adminId, 'Admin', '+910000000000', 'admin@askhimalaya.com', adminHash, 'admin']);
 
   // Seed events
   const seedEvents = [
@@ -168,18 +171,19 @@ function seedData() {
     },
   ];
 
-  const insert = db.prepare(`
+  const insertText = `
     INSERT INTO events (id, slug, category, title, description, about, image, date, date_full, time, location, venue, entry_fee, cta, badge_color, badge_text_color, age_limit, event_type, organized_by, duration, things_to_know, carousel_bg, carousel_date, carousel_venue, created_by)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `);
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)
+    ON CONFLICT (slug) DO NOTHING
+  `;
 
   for (const e of seedEvents) {
-    insert.run(
+    await pool.query(insertText, [
       uuidv4(), e.slug, e.category, e.title, e.description, e.about, e.image,
       e.date, e.date_full, e.time, e.location, e.venue, e.entry_fee, e.cta,
       e.badge_color, e.badge_text_color, e.age_limit, e.event_type, e.organized_by,
       e.duration, e.things_to_know, e.carousel_bg, e.carousel_date, e.carousel_venue, adminId
-    );
+    ]);
   }
 }
 
@@ -216,34 +220,34 @@ export function rowToEvent(row) {
 }
 
 // Saved events helpers
-export function toggleSavedEvent(userId, eventId) {
-  const db = getDb();
-  const existing = db.prepare('SELECT 1 FROM saved_events WHERE user_id = ? AND event_id = ?').get(userId, eventId);
-  if (existing) {
-    db.prepare('DELETE FROM saved_events WHERE user_id = ? AND event_id = ?').run(userId, eventId);
+export async function toggleSavedEvent(userId, eventId) {
+  const db = await getDb();
+  const existing = await db.query('SELECT 1 FROM saved_events WHERE user_id = $1 AND event_id = $2', [userId, eventId]);
+  if (existing.rows.length > 0) {
+    await db.query('DELETE FROM saved_events WHERE user_id = $1 AND event_id = $2', [userId, eventId]);
     return { saved: false };
   } else {
-    db.prepare('INSERT INTO saved_events (user_id, event_id) VALUES (?, ?)').run(userId, eventId);
+    await db.query('INSERT INTO saved_events (user_id, event_id) VALUES ($1, $2)', [userId, eventId]);
     return { saved: true };
   }
 }
 
-export function isEventSaved(userId, eventId) {
+export async function isEventSaved(userId, eventId) {
   if (!userId) return false;
-  const db = getDb();
-  const existing = db.prepare('SELECT 1 FROM saved_events WHERE user_id = ? AND event_id = ?').get(userId, eventId);
-  return !!existing;
+  const db = await getDb();
+  const existing = await db.query('SELECT 1 FROM saved_events WHERE user_id = $1 AND event_id = $2', [userId, eventId]);
+  return existing.rows.length > 0;
 }
 
-export function getSavedEventsForUser(userId) {
-  const db = getDb();
-  const rows = db.prepare(`
+export async function getSavedEventsForUser(userId) {
+  const db = await getDb();
+  const res = await db.query(`
     SELECT e.* FROM events e
     JOIN saved_events s ON e.id = s.event_id
-    WHERE s.user_id = ?
+    WHERE s.user_id = $1
     ORDER BY s.created_at DESC
-  `).all(userId);
-  return rows.map(rowToEvent);
+  `, [userId]);
+  return res.rows.map(rowToEvent);
 }
 
 export default getDb;
