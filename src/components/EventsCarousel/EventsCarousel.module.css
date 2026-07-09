@@ -1,0 +1,372 @@
+.carouselWrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.slide {
+  width: 100%;
+  min-height: 481px;
+  display: flex;
+  align-items: center;
+  padding: 0 120px;
+  position: relative;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  gap: 0;
+}
+
+/* Animations */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+}
+
+.slideIn {
+  animation: fadeSlideIn 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+.slideOut {
+  animation: fadeSlideOut 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+/* Arrow buttons */
+.arrowLeft,
+.arrowRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: opacity 0.2s ease;
+  opacity: 0.6;
+}
+
+.arrowLeft { left: 60px; }
+.arrowRight { right: 60px; }
+
+.arrowLeft svg,
+.arrowRight svg {
+  width: 20px;
+  height: 20px;
+}
+
+.arrowLeft:hover,
+.arrowRight:hover {
+  opacity: 1;
+}
+
+/* Text */
+.textContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-left: 0;
+  z-index: 2;
+}
+
+.dateLabel {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+  margin-bottom: 14px;
+}
+
+.eventTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 61px;
+  color: #000000;
+  margin-bottom: 8px;
+  max-width: 600px;
+}
+
+.venue {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 30px;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.entryFee {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 18px;
+  color: #000000;
+  margin-bottom: 32px;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 155px;
+  height: 46px;
+  background: #000000;
+  border-radius: 23px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ctaButton:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* Image */
+.imageContainer {
+  position: absolute;
+  right: 120px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 325px;
+  height: 369px;
+  border-radius: 50px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.eventImage {
+  object-fit: cover;
+  border-radius: 50px;
+}
+
+/* Dot indicators */
+.dots {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 5;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #737373;
+  border: none;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 0;
+}
+
+.dotActive {
+  width: 24px;
+  border-radius: 5px;
+  background: #000000;
+}
+
+@media (max-width: 900px) {
+  .slide {
+    min-height: 344px;
+    align-items: stretch;
+    flex-direction: column;
+    padding: 16px 14px 56px;
+    overflow: hidden;
+  }
+
+  .textContent {
+    flex: 0 0 auto;
+  }
+
+  .dateLabel {
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 17px;
+  }
+
+  .eventTitle {
+    max-width: none;
+    margin-bottom: 6px;
+    font-size: 24px;
+    line-height: 30px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .venue {
+    margin-bottom: 6px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .entryFee {
+    margin-bottom: 14px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .ctaButton {
+    width: 124px;
+    height: 36px;
+    border-radius: 20px;
+    font-size: 13px;
+  }
+
+  .imageContainer {
+    position: relative;
+    order: -1;
+    right: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+    height: 148px;
+    margin-bottom: 14px;
+    border-radius: 18px;
+  }
+
+  .eventImage {
+    border-radius: 18px;
+  }
+
+  .arrowLeft,
+  .arrowRight {
+    top: auto;
+    bottom: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.08);
+    color: #000000;
+    opacity: 1;
+  }
+
+  .arrowLeft {
+    left: 14px;
+  }
+
+  .arrowRight {
+    right: 14px;
+  }
+
+  .dots {
+    bottom: 25px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .dotActive {
+    width: 20px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 899px) {
+  .slide {
+    min-height: 400px;
+    padding: 0 60px;
+  }
+  .arrowLeft { left: 24px; }
+  .arrowRight { right: 24px; }
+  .eventTitle {
+    font-size: 36px;
+    line-height: 44px;
+    max-width: 420px;
+  }
+  .venue {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .entryFee {
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .imageContainer {
+    right: 60px;
+    width: 260px;
+    height: 300px;
+  }
+  .textContent {
+    padding-right: 280px;
+  }
+}
+@media (min-width: 900px) and (max-width: 1100px) {
+  .slide {
+    min-height: 400px;
+    padding: 0 60px;
+  }
+  .arrowLeft { left: 24px; }
+  .arrowRight { right: 24px; }
+  .eventTitle {
+    font-size: 36px;
+    line-height: 44px;
+    max-width: 420px;
+  }
+  .venue {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .entryFee {
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .imageContainer {
+    right: 60px;
+    width: 260px;
+    height: 300px;
+  }
+  .textContent {
+    padding-right: 280px;
+  }
+}
+
+@media (max-width: 380px) {
+  .slide {
+    min-height: 328px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .imageContainer {
+    height: 136px;
+  }
+
+  .eventTitle {
+    font-size: 22px;
+    line-height: 28px;
+  }
+}

@@ -1,0 +1,86 @@
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 300px;
+  max-width: 420px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: slideInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.exit {
+  animation: slideOutDown 0.25s ease-in forwards;
+}
+
+.success {
+  background: rgba(128, 196, 57, 0.12);
+  border: 1px solid rgba(128, 196, 57, 0.25);
+  color: #80C439;
+}
+
+.error {
+  background: rgba(233, 60, 60, 0.12);
+  border: 1px solid rgba(233, 60, 60, 0.25);
+  color: #E93C3C;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(120%) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(120%) scale(0.95);
+    opacity: 0;
+  }
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.message {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: inherit;
+  opacity: 0.4;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: opacity 0.2s;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.closeBtn:hover {
+  opacity: 1;
+}

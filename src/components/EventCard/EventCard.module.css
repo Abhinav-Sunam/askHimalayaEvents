@@ -1,0 +1,374 @@
+.card {
+  width: 100%;
+  max-width: 1296px;
+  height: 339px;
+  background: #FFFFFF;
+  border-radius: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 4px solid transparent;
+  border-radius: 20px;
+  transition: border-color 0.4s ease;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: scale(0.98);
+  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover::after {
+  border-color: #80C439;
+}
+
+/* Left image */
+.imageContainer {
+  width: 467px;
+  min-width: 467px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  margin-left: -10px;
+}
+
+.eventImage {
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+/* Right text area */
+.textInfo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 56px;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Category badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 14px;
+  border-radius: 9px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 11px;
+  text-transform: uppercase;
+  width: fit-content;
+  margin-bottom: 22px;
+}
+
+/* Event title */
+.title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 37px;
+  color: #000000;
+  margin-bottom: 22px;
+}
+
+/* Event description */
+.description {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  color: #000000;
+  max-width: 520px;
+  margin-bottom: 22px;
+}
+
+/* Meta info row (date, time, location) */
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 22px;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metaIcon {
+  width: 16px;
+  height: 16px;
+  color: #000000;
+  flex-shrink: 0;
+}
+
+.metaText {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: #000000;
+  white-space: nowrap;
+}
+
+.metaSpacer {
+  width: 40px;
+}
+
+/* CTA button */
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 17px;
+  background: #000000;
+  border-radius: 17px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  color: #FFFFFF;
+  width: fit-content;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.ctaButton:hover {
+  background: #222222;
+  transform: scale(1.03);
+}
+
+@media (max-width: 900px) {
+  .card {
+    min-height: 0;
+    height: auto;
+    flex-direction: column;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  }
+
+  .card::after {
+    border-width: 2px;
+    border-radius: 14px;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+  .imageContainer {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    aspect-ratio: 1.08;
+    margin-left: 0;
+    border-radius: 14px 14px 0 0;
+  }
+
+  .eventImage {
+    border-radius: 14px 14px 0 0;
+  }
+
+  .textInfo {
+    padding: 10px 10px 12px;
+    align-items: stretch;
+  }
+
+  .textContent {
+    width: 100%;
+  }
+
+  .badge {
+    margin-bottom: 8px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 7px;
+    line-height: 9px;
+  }
+
+  .title {
+    min-height: 36px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 18px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .description {
+    display: none;
+  }
+
+  .metaRow {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 0;
+  }
+
+  .metaSpacer {
+    display: none;
+  }
+
+  .metaItem {
+    max-width: 100%;
+    gap: 5px;
+  }
+
+  .metaIcon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .metaText {
+    display: -webkit-box;
+    max-width: 100%;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    font-size: 10px;
+    line-height: 13px;
+  }
+
+  .ctaButton {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 899px) {
+  .card {
+    height: 280px;
+    flex-direction: row;
+  }
+  .imageContainer {
+    width: 320px;
+    min-width: 320px;
+    height: 100%;
+  }
+  .textInfo {
+    padding-left: 32px;
+  }
+  .title {
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 12px;
+  }
+  .description {
+    font-size: 13px;
+    line-height: 16px;
+    max-width: 380px;
+    margin-bottom: 12px;
+    display: -webkit-box;
+  }
+  .metaRow {
+    margin-bottom: 12px;
+    flex-direction: row;
+    align-items: center;
+  }
+  .metaSpacer {
+    display: inline-block;
+    width: 24px;
+  }
+  .metaItem {
+    gap: 6px;
+  }
+  .metaText {
+    font-size: 11px;
+    line-height: 14px;
+    white-space: nowrap;
+  }
+  .metaIcon {
+    width: 14px;
+    height: 14px;
+  }
+  .ctaButton {
+    display: inline-flex;
+  }
+}
+@media (min-width: 900px) and (max-width: 1100px) {
+  .card {
+    height: 280px;
+    flex-direction: row;
+  }
+  .imageContainer {
+    width: 320px;
+    min-width: 320px;
+    height: 100%;
+  }
+  .textInfo {
+    padding-left: 32px;
+  }
+  .title {
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 12px;
+  }
+  .description {
+    font-size: 13px;
+    line-height: 16px;
+    max-width: 380px;
+    margin-bottom: 12px;
+    display: -webkit-box;
+  }
+  .metaRow {
+    margin-bottom: 12px;
+    flex-direction: row;
+    align-items: center;
+  }
+  .metaSpacer {
+    display: inline-block;
+    width: 24px;
+  }
+  .metaItem {
+    gap: 6px;
+  }
+  .metaText {
+    font-size: 11px;
+    line-height: 14px;
+    white-space: nowrap;
+  }
+  .metaIcon {
+    width: 14px;
+    height: 14px;
+  }
+  .ctaButton {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 380px) {
+  .textInfo {
+    padding: 9px 9px 11px;
+  }
+
+  .title {
+    min-height: 34px;
+    font-size: 13px;
+    line-height: 17px;
+  }
+
+  .metaText {
+    font-size: 9.5px;
+  }
+}

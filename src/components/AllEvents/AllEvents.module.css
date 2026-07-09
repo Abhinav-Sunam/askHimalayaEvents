@@ -1,0 +1,124 @@
+.section {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 72px 80px;
+}
+
+.titleRow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.sectionTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 30px;
+  color: #FFFFFF;
+}
+
+.underline {
+  width: 127px;
+  height: 2px;
+  background: #FFFFFF;
+  border-radius: 1px;
+}
+
+.eventsList {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.ctaContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.viewAllBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 32px;
+  background: #FFFFFF;
+  border-radius: 30px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: #000000;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.viewAllBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: 0 14px 46px;
+  }
+
+  .titleRow {
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+
+  .sectionTitle {
+    font-size: 23px;
+    line-height: 29px;
+  }
+
+  .underline {
+    width: 92px;
+  }
+
+  .eventsList {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    align-items: stretch;
+  }
+
+  .ctaContainer {
+    margin-top: 32px;
+  }
+
+  .viewAllBtn {
+    width: 100%;
+    min-height: 50px;
+    padding: 13px 24px;
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 899px) {
+  .section {
+    padding: 0 32px 60px;
+  }
+  .titleRow {
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .eventsList {
+    gap: 50px;
+  }
+}
+@media (min-width: 900px) and (max-width: 1100px) {
+  .section {
+    padding: 0 32px 60px;
+  }
+  .titleRow {
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .eventsList {
+    gap: 50px;
+  }
+}

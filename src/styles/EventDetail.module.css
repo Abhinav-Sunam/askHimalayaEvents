@@ -1,0 +1,653 @@
+.page {
+  background: #000000;
+  min-height: 100vh;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 115px 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  color: #FFFFFF;
+}
+
+.breadcrumbLink {
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.breadcrumbLink:hover {
+  opacity: 1;
+}
+
+.breadcrumbCurrent {
+  opacity: 1;
+}
+
+/* Hero */
+.heroSection {
+  display: flex;
+  padding: 28px 115px 40px;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+.heroLeft {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.heroTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 37px;
+  color: #FFFFFF;
+  margin-bottom: 12px;
+  overflow-wrap: anywhere;
+}
+
+.heroMeta {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.metaDivider {
+  display: inline-block;
+  width: 1px;
+  height: 22px;
+  background: rgba(255,255,255,0.5);
+}
+
+.heroImageContainer {
+  width: 100%;
+  max-width: 649px;
+  height: 347px;
+  position: relative;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.heroImage {
+  object-fit: cover;
+}
+
+/* Right column */
+.heroRight {
+  width: 520px;
+  flex-shrink: 0;
+  padding-top: 56px;
+}
+
+.saveShare {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 48px;
+  justify-content: flex-end;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #FFFFFF;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.actionBtn:hover {
+  opacity: 0.75;
+}
+
+.aboutTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 25px;
+  color: #FFFFFF;
+  margin-bottom: 16px;
+}
+
+.aboutText {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: #FFFFFF;
+  max-width: 505px;
+  overflow-wrap: anywhere;
+}
+
+/* Details Section */
+.detailsSection {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  padding: 32px 115px 80px;
+}
+
+.detailsLeft {
+  flex: 1;
+}
+
+.detailsTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 25px;
+  color: #FFFFFF;
+  margin-bottom: 28px;
+}
+
+.detailsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+}
+
+.detailRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.detailIcon {
+  width: 16px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.detailLabel {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: #FFFFFF;
+  width: 90px;
+  flex-shrink: 0;
+}
+
+.detailValue {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: #ACACAC;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Things to know */
+.thingsToKnow {
+  flex: 1;
+}
+
+.thingsList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  list-style: none;
+}
+
+.thingsItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: #FFFFFF;
+  line-height: 1.5;
+}
+
+.thingsIcon {
+  flex-shrink: 0;
+}
+
+/* Price & CTA */
+.priceCta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  flex-shrink: 0;
+  min-width: 280px;
+}
+
+.priceBlock {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.price {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 25px;
+  color: #FFFFFF;
+}
+
+.onwards {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 10px;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+}
+
+.ticketButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 239px;
+  height: 44px;
+  background: #FFFFFF;
+  border-radius: 30px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: #000000;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ticketButton:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 28px rgba(255,255,255,0.2);
+}
+
+.secureCheckout {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: #E6E6E6;
+}
+
+@media (max-width: 900px) {
+  .breadcrumb {
+    gap: 6px;
+    padding: 18px 14px 0;
+    font-size: 11px;
+  }
+
+  .breadcrumbCurrent {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .heroSection {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 18px 14px 28px;
+  }
+
+  .heroLeft,
+  .heroRight {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .heroTitle {
+    margin-bottom: 10px;
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .heroMeta {
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .heroMeta span:first-child,
+  .heroMeta span:last-child {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .metaDivider {
+    height: 17px;
+  }
+
+  .heroImageContainer {
+    max-width: none;
+    height: auto;
+    aspect-ratio: 1.35;
+    border-radius: 18px;
+  }
+
+  .heroImage {
+    border-radius: 18px;
+  }
+
+  .heroRight {
+    padding-top: 0;
+  }
+
+  .saveShare {
+    justify-content: flex-start;
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  .actionBtn {
+    min-height: 34px;
+    font-size: 13px;
+  }
+
+  .aboutTitle {
+    margin-bottom: 10px;
+    font-size: 19px;
+  }
+
+  .aboutText {
+    max-width: none;
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  .detailsSection {
+    flex-direction: column;
+    gap: 28px;
+    padding: 8px 14px 48px;
+  }
+
+  .detailsLeft,
+  .thingsToKnow {
+    width: 100%;
+  }
+
+  .detailsTitle {
+    margin-bottom: 16px;
+    font-size: 19px;
+  }
+
+  .detailsGrid {
+    gap: 13px;
+  }
+
+  .detailRow {
+    display: grid;
+    grid-template-columns: 18px minmax(76px, 0.35fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 9px;
+  }
+
+  .detailIcon {
+    width: 18px;
+    min-height: 18px;
+    justify-content: center;
+  }
+
+  .detailLabel,
+  .detailValue {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .detailLabel {
+    width: auto;
+  }
+
+  .thingsList {
+    gap: 14px;
+  }
+
+  .thingsItem {
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 12px;
+  }
+
+  .priceCta {
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+    gap: 10px;
+    padding-top: 2px;
+  }
+
+  .priceBlock {
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .price {
+    font-size: 22px;
+  }
+
+  .ticketButton {
+    width: 100%;
+    height: 42px;
+    font-size: 16px;
+  }
+
+  .secureCheckout {
+    justify-content: center;
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 899px) {
+  .breadcrumb {
+    padding: 22px 36px 0;
+  }
+  .heroSection {
+    padding: 28px 36px 38px;
+    gap: 28px;
+    flex-direction: row;
+  }
+  .heroLeft {
+    flex: 1;
+  }
+  .heroRight {
+    width: 380px;
+    padding-top: 46px;
+  }
+  .heroTitle {
+    font-size: 26px;
+    line-height: 32px;
+  }
+  .heroMeta {
+    font-size: 16px;
+    line-height: 20px;
+    gap: 10px;
+  }
+  .heroImageContainer {
+    max-width: 480px;
+    height: 280px;
+  }
+  .saveShare {
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .actionBtn {
+    font-size: 13px;
+  }
+  .aboutText {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .detailsSection {
+    padding: 28px 36px 60px;
+    gap: 28px;
+    flex-direction: row;
+  }
+  .detailsLeft {
+    flex: 1;
+  }
+  .detailsTitle {
+    font-size: 20px;
+  }
+  .detailRow {
+    gap: 10px;
+  }
+  .detailLabel {
+    font-size: 11px;
+    width: 80px;
+  }
+  .detailValue {
+    font-size: 11px;
+  }
+  .thingsToKnow {
+    flex: 1;
+  }
+  .thingsItem {
+    font-size: 11px;
+    gap: 10px;
+  }
+  .priceCta {
+    width: 100%;
+    min-width: 0;
+    align-items: flex-end;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .price {
+    font-size: 22px;
+  }
+  .ticketButton {
+    width: 200px;
+    height: 40px;
+    font-size: 17px;
+  }
+  .secureCheckout {
+    font-size: 11px;
+  }
+}
+@media (min-width: 900px) and (max-width: 1100px) {
+  .breadcrumb {
+    padding: 22px 36px 0;
+  }
+  .heroSection {
+    padding: 28px 36px 38px;
+    gap: 28px;
+    flex-direction: row;
+  }
+  .heroLeft {
+    flex: 1;
+  }
+  .heroRight {
+    width: 380px;
+    padding-top: 46px;
+  }
+  .heroTitle {
+    font-size: 26px;
+    line-height: 32px;
+  }
+  .heroMeta {
+    font-size: 16px;
+    line-height: 20px;
+    gap: 10px;
+  }
+  .heroImageContainer {
+    max-width: 480px;
+    height: 280px;
+  }
+  .saveShare {
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .actionBtn {
+    font-size: 13px;
+  }
+  .aboutText {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .detailsSection {
+    padding: 28px 36px 60px;
+    gap: 28px;
+    flex-direction: row;
+  }
+  .detailsLeft {
+    flex: 1;
+  }
+  .detailsTitle {
+    font-size: 20px;
+  }
+  .detailRow {
+    gap: 10px;
+  }
+  .detailLabel {
+    font-size: 11px;
+    width: 80px;
+  }
+  .detailValue {
+    font-size: 11px;
+  }
+  .thingsToKnow {
+    flex: 1;
+  }
+  .thingsItem {
+    font-size: 11px;
+    gap: 10px;
+  }
+  .priceCta {
+    width: 100%;
+    min-width: 0;
+    align-items: flex-end;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .price {
+    font-size: 22px;
+  }
+  .ticketButton {
+    width: 200px;
+    height: 40px;
+    font-size: 17px;
+  }
+  .secureCheckout {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 380px) {
+  .heroTitle {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  .heroMeta {
+    font-size: 12px;
+    line-height: 17px;
+  }
+
+  .heroImageContainer {
+    aspect-ratio: 1.18;
+  }
+
+  .detailRow {
+    grid-template-columns: 16px 72px minmax(0, 1fr);
+    gap: 8px;
+  }
+}

@@ -1,0 +1,165 @@
+.heroWrapper {
+  padding: 12px 72px 0;
+}
+
+.hero {
+  width: 100%;
+  max-width: 1296px;
+  height: 610px;
+  border-radius: 50px;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.heroImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  z-index: 1;
+}
+
+.content {
+  position: absolute;
+  z-index: 2;
+  left: 30px;
+  top: 61px;
+  max-width: 768px;
+}
+
+.heading {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 72px;
+  line-height: 88px;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+}
+
+.subtext {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 23px;
+  color: #FFFFFF;
+  max-width: 442px;
+}
+
+@media (max-width: 900px) {
+  .heroWrapper {
+    padding: 18px 14px 0;
+  }
+
+  .hero {
+    height: min(98vw, 390px);
+    min-height: 330px;
+    border-radius: 34px;
+  }
+
+  .heroImage {
+    object-position: 45% center;
+  }
+
+  .overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.05) 0%,
+      rgba(0, 0, 0, 0.28) 44%,
+      rgba(0, 0, 0, 0.82) 100%
+    );
+  }
+
+  .content {
+    left: 22px;
+    right: 22px;
+    top: auto;
+    bottom: 28px;
+    max-width: none;
+  }
+
+  .heading {
+    font-size: 34px;
+    line-height: 39px;
+    margin-bottom: 12px;
+  }
+
+  .subtext {
+    max-width: 300px;
+    font-size: 13px;
+    line-height: 19px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 899px) {
+  .heroWrapper {
+    padding: 12px 32px 0;
+  }
+  .hero {
+    height: 480px;
+    border-radius: 40px;
+  }
+  .content {
+    left: 40px;
+    top: 50px;
+    max-width: 600px;
+  }
+  .heading {
+    font-size: 56px;
+    line-height: 68px;
+  }
+  .subtext {
+    font-size: 17px;
+    line-height: 21px;
+    max-width: 400px;
+  }
+}
+@media (min-width: 900px) and (max-width: 1100px) {
+  .heroWrapper {
+    padding: 12px 32px 0;
+  }
+  .hero {
+    height: 480px;
+    border-radius: 40px;
+  }
+  .content {
+    left: 40px;
+    top: 50px;
+    max-width: 600px;
+  }
+  .heading {
+    font-size: 56px;
+    line-height: 68px;
+  }
+  .subtext {
+    font-size: 17px;
+    line-height: 21px;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero {
+    min-height: 316px;
+    border-radius: 30px;
+  }
+
+  .content {
+    left: 18px;
+    right: 18px;
+    bottom: 24px;
+  }
+
+  .heading {
+    font-size: 30px;
+    line-height: 35px;
+  }
+}

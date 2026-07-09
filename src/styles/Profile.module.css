@@ -1,0 +1,475 @@
+.page {
+  background: #000000;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+/* Banner */
+.profileBanner {
+  background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%);
+  margin: 30px -20px;
+  padding: 24px 24px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 0 32px 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.profileBanner::before {
+  content: '';
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(128, 196, 57, 0.12) 0%, transparent 70%);
+  top: -80px;
+  right: -50px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.bannerContent {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.bannerMascot {
+  position: absolute;
+  right: 28px;
+  top: 45%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.mascotImg {
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5));
+  animation: floatMascot 4s ease-in-out infinite;
+}
+
+@media (min-width: 768px) and (max-width: 899px) {
+  .container {
+    max-width: 700px;
+    padding: 0 32px 50px;
+  }
+  .profileBanner {
+    padding: 24px 24px 36px;
+  }
+  .userCard {
+    padding: 18px 22px;
+  }
+  .userName {
+    font-size: 22px;
+  }
+  .quickActions {
+    gap: 12px;
+  }
+  .quickAction {
+    padding: 14px;
+  }
+}
+@media (min-width: 900px) and (max-width: 1100px) {
+  .container {
+    max-width: 700px;
+    padding: 0 32px 50px;
+  }
+  .profileBanner {
+    padding: 24px 24px 36px;
+  }
+  .userCard {
+    padding: 18px 22px;
+  }
+  .userName {
+    font-size: 22px;
+  }
+  .quickActions {
+    gap: 12px;
+  }
+  .quickAction {
+    padding: 14px;
+  }
+}
+
+@keyframes floatMascot {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.backBtn {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #E5E5E5;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.backBtn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.headerTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #FFFFFF;
+  letter-spacing: -0.5px;
+}
+
+/* User Card with Glassmorphism */
+.userCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 20px 24px;
+  border-radius: 20px;
+  margin-top: -24px;
+  position: relative;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.3s ease;
+}
+
+.userCard:hover {
+  border-color: rgba(128, 196, 57, 0.3);
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #80C439 0%, #4E9313 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: #020604;
+  flex-shrink: 0;
+  border: 3px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 24px rgba(128, 196, 57, 0.25);
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.userNameRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.userName {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.userBadge {
+  background: rgba(128, 196, 57, 0.12);
+  border: 1px solid rgba(128, 196, 57, 0.2);
+  color: #80C439;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.userPhone {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #A3A3A3;
+}
+
+.userEmail {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: #6C7275;
+}
+
+/* Stats Actions Dashboard */
+.quickActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 24px 0 20px;
+}
+
+.quickAction {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 16px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  color: #ffffff;
+  text-align: left;
+}
+
+.quickAction:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: #80C439;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.quickActionIcon {
+  width: 48px;
+  height: 48px;
+  background: rgba(128, 196, 57, 0.1);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #80C439;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.quickAction:hover .quickActionIcon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.quickActionInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.quickActionLabel {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #A3A3A3;
+}
+
+.statsBadge {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+/* Action Rows & Menus */
+.section {
+  margin-bottom: 28px;
+}
+
+.sectionTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: #80C439;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  padding-left: 4px;
+}
+
+.actionButton {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.actionButton:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateX(4px);
+}
+
+.actionLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #E5E5E5;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  transition: color 0.3s ease;
+}
+
+.actionButton:hover .actionLeft {
+  color: #FFFFFF;
+}
+
+.actionIconWrapper {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #A3A3A3;
+  transition: all 0.3s ease;
+}
+
+.actionButton:hover .actionIconWrapper {
+  color: #80C439;
+  background: rgba(128, 196, 57, 0.1);
+}
+
+.chevronIcon {
+  color: #4F5E66;
+  transition: all 0.3s ease;
+}
+
+.actionButton:hover .chevronIcon {
+  color: #FFFFFF;
+  transform: translateX(2px);
+}
+
+/* Menu Group Component */
+.menuGroup {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  color: #E5E5E5;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.menuItem:hover {
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateX(4px);
+}
+
+.menuItem:hover .actionLeft {
+  color: #FFFFFF;
+}
+
+.menuItem:hover .actionIconWrapper {
+  color: #80C439;
+  background: rgba(128, 196, 57, 0.1);
+}
+
+.menuItem:hover .chevronIcon {
+  color: #FFFFFF;
+  transform: translateX(2px);
+}
+
+.menuDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.04);
+  margin: 0 20px;
+}
+
+/* Logout Button */
+.logoutBtn {
+  background: rgba(233, 60, 60, 0.05);
+  border: 1px solid rgba(233, 60, 60, 0.2);
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  color: #F87171;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  width: 100%;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  margin-top: 12px;
+}
+
+.logoutBtn:hover {
+  background: rgba(233, 60, 60, 0.08);
+  border-color: #EF4444;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.15);
+}
+
+.logoutBtn .actionLeft {
+  color: #F87171;
+}
+
+.logoutBtn:hover .actionLeft {
+  color: #EF4444;
+}
+
+.logoutIconWrapper {
+  width: 36px;
+  height: 36px;
+  background: rgba(233, 60, 60, 0.06);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #F87171;
+  transition: all 0.3s ease;
+}
+
+.logoutBtn:hover .logoutIconWrapper {
+  background: rgba(233, 60, 60, 0.15);
+  color: #EF4444;
+}
