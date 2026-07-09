@@ -2,8 +2,13 @@ import { Pool } from 'pg';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcryptjs';
 
+const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString,
+  ssl: connectionString && !connectionString.includes('localhost') && !connectionString.includes('127.0.0.1')
+    ? { rejectUnauthorized: false }
+    : false
 });
 
 let initialized = false;
